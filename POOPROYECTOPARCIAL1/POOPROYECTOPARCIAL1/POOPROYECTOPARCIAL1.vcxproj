@@ -161,7 +161,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\Prerequisites.h" />
+    <ClInclude Include="include\GestorDeTickets.h" />
+    <ClInclude Include="include\Prerequisites.h" />
+    <ClInclude Include="include\Ticket.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp" />
