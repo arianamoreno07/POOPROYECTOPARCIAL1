@@ -56,23 +56,9 @@ main() {
 
 		}
 		else if (opcion == 5) {
+			
 			std::string id;
-			std::cout << "ID del ticket para cambiar estado: "; std::getline(std::cin, id);
-			std::cout << "Seleccione nuevo estado (1: Pendiente, 2: En Proceso, 3: Completado): ";
-			int est; std::cin >> est; std::cin.ignore();
-			Estado nuevo = Estado::Pendiente;
-			if (est == 2) nuevo = Estado::EnProceso;
-			else if (est == 3) nuevo = Estado::Completado;
-			gestor.cambiarEstadoTicket(id, nuevo);
 
-		}else if (opcion == 6) {
-			std::cout << "Saliendo del programa.\n";
-		}
-		else {
-			std::cout << "Opcion invalida.\n";
 		}
 	}
-
-	return 0;
-
 };
