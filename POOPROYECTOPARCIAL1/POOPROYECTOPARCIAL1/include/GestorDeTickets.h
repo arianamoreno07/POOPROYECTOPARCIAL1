@@ -11,24 +11,27 @@ public:
 	void agregarTicket(const Ticket& ticket) {
 		tickets.push_back(ticket);
 	}
+
+
 	bool eliminarTicket(const std::string& id) {
-		for (auto it = tickets.begin(); it != tickets.end(); ++it) {
+		for (auto it = tickets.begin(); it != tickets.end(); ) {
 			if (it->getID() == id) {
-				tickets.erase(it);
+				it = tickets.erase(it); 
 				return true;
+			}
+			else {
+				++it;
 			}
 		}
 		return false;
 	}
 
-	void editarTicket(const std::string& id, const std::string& nuevoTitulo, const std::string& nuevaDescripcion, Estado nuevoEstado, double nuevoPrecio, bool esVenta) {
+	void editarTicket(const std::string& id, const std::string& nuevoTitulo, const std::string& nuevaDescripcion, Estado nuevoEstado) {
 		Ticket* ticket = buscarTicket(id);
 		if (ticket) {
 			ticket->setTitulo(nuevoTitulo);
 			ticket->setDescripcion(nuevaDescripcion);
 			ticket->setEstado(nuevoEstado);
-			ticket->setPrecio(nuevoPrecio);
-			ticket->setVenta(esVenta);
 		}
 	}
 
