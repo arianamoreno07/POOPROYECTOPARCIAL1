@@ -25,24 +25,54 @@ private:
 
 	/**
 	 * @brief Contenedor interno que almacena todos los objetos Ticket del sistema.
-	 * Se accede a través de los métodos públicos de la clase.
 	 */
 	std::vector<Ticket> tickets;
 
+	/**
+	* @brief Contador que lleva el registro del proximo ID disponible para asignar a un nuevo Ticket.
+	* Se inicializa en 2000 y se incrementa automáticamente con cada nuevo ticket.
+	*/
+	int 
+	proximoID = 2000; 
+
+	/**
+	* @brief Genera el siguiente ID de ticket como una cadena numerica. 
+	* Utiliza el contador 'proximoID' y lo incrementa después de cada llamada.
+	* @return std::string El ID generado para el nuevo ticket compuesto solo de numeros. 
+	*/
+	std::string generarProximoID() {
+		std::string id = std::to_string(proximoID);
+		proximoID++;
+		return id;
+
+	}
+
 public:
+	
+	/**
+	 * @brief Constructor por defecto de la clase GestorDeTickets.
+	 *
+	 * Inicializa la colección de tickets como un vector vacío.
+	 */
+	GestorDeTickets() = default; // Opción concisa usando '= default;'
 	
 	// CRUD Y FUNCIONALIDAD PRINCIPAL
 
+
 	/**
-	 * @brief Agrega un nuevo Ticket a la colección.
+	 * @brief Agrega un nuevo Ticket a la colección, generando su ID automáticamente.
 	 *
-	 * El ticket se añade al final del vector interno.
+	 * El ticket se añade al final del vector interno con el estado inicial 'Pendiente'.
 	 *
-	 * @param[in] ticket El objeto Ticket a ser agregado (se agrega por copia).
+	 * @param[in] titulo El título descriptivo del ticket.
+	 * @param[in] descripcion El detalle completo del problema o tarea.
 	 * @return void
 	 */
-	void agregarTicket(const Ticket& ticket) {
-		tickets.push_back(ticket);
+	void 
+		agregarTicket(const std::string& titulo, const std::string& descripcion) {
+		std::string id = generarProximoID();
+		Ticket nuevoTicket(id, titulo, descripcion, Estado::Pendiente);
+		tickets.push_back(nuevoTicket);
 	}
 
 	/**
@@ -54,7 +84,8 @@ public:
 	 * @return bool Retorna true si el ticket fue encontrado y eliminado exitosamente,
 	 * o false si no se encontró ningún ticket con ese ID.
 	 */
-	bool eliminarTicket(const std::string& id) {
+	bool 
+		eliminarTicket(const std::string& id) {
 		for (auto it = tickets.begin(); it != tickets.end(); ) {
 			if (it->getID() == id) {
 				it = tickets.erase(it); 
@@ -71,16 +102,16 @@ public:
 	/**
 	 * @brief Edita el título, la descripción y el estado de un Ticket existente.
 	 *
-	 * Internamente usa el método 'buscarTicket' para localizar el elemento.
-	 * Si el ticket no existe, la función no hace nada.
+	 * Si el ticket existe, actualiza sus campos. El estado se mantiene igual si no se modifica.
 	 *
 	 * @param[in] id El ID del ticket a modificar.
 	 * @param[in] nuevoTitulo El nuevo título a asignar.
 	 * @param[in] nuevaDescripcion La nueva descripción a asignar.
-	 * @param[in] nuevoEstado El nuevo estado (e.g., Estado::EnProceso).
+	 * @param[in] nuevoEstado El nuevo estado (se suele pasar el estado actual si solo se cambian título/descripción).
 	 * @return void
 	 */
-	void editarTicket(const std::string& id, const std::string& nuevoTitulo, const std::string& nuevaDescripcion, Estado nuevoEstado) {
+	void 
+		editarTicket(const std::string& id, const std::string& nuevoTitulo, const std::string& nuevaDescripcion, Estado nuevoEstado) {
 		Ticket* ticket = buscarTicket(id);
 		if (ticket) {
 			ticket->setTitulo(nuevoTitulo);
@@ -97,7 +128,8 @@ public:
 	 * @param[in] nuevoEstado El nuevo estado a asignar.
 	 * @return void
 	 */
-	void cambiarEstadoTicket(const std::string& id, Estado nuevoEstado) {
+	void 
+		cambiarEstadoTicket(const std::string& id, Estado nuevoEstado) {
 		Ticket* ticket = buscarTicket(id);
 		if (ticket) {
 			ticket->setEstado(nuevoEstado);
@@ -122,12 +154,14 @@ public:
 	/**
 	 * @brief Imprime todos los tickets almacenados en la colección a la consola (std::cout).
 	 *
-	 * Llama al método 'toString()' de cada Ticket para formatear la salida.
+	 * Llama al método 'toString()' de cada Ticket para formatear la salida,
+	 * usando separadores para mejorar la legibilidad.
 	 * Si la colección está vacía, imprime un mensaje de aviso.
 	 *
 	 * @return void
 	 */
-	void listarTickets() const {
+	void 
+		listarTickets() const {
 		if (tickets.empty()) {
 			std::cout << "No hay tickets disponibles." << std::endl;
 			return;

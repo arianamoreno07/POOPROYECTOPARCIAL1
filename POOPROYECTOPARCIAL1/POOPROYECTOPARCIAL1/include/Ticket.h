@@ -25,24 +25,24 @@ class Ticket {
 public: 
 	
 	/**
-	 * @brief Constructor por defecto de la clase Ticket.
+	 * @brief Constructor de la clase Ticket.
 	 *
 	 * Inicializa todos los miembros con valores vacíos o predeterminados:
 	 * ID, título, descripción = ""
 	 * estado = Estado::Pendiente
-	 * fecha = {0, 0, 0}
 	 */
-	Ticket() : ID(""), titulo(""), descripcion(""), estado(Estado::Pendiente), fecha{ 0, 0, 0 } {
-		// Se asume que aquí están definidos 'Estado' y 'Fecha'
+	Ticket() : ID(""), titulo(""), descripcion(""), estado(Estado::Pendiente) {
+		// Se asume que aquí están definidos 'Estado'
 
 	}
 
 	/**
 	 * @brief Constructor parametrizado para crear un Ticket completamente inicializado.
 	 *
-	 * También llama a 'fecha.getFecha()' para registrar la fecha de creación del sistema.
+	 * El ID es generado y asignado por la clase GestorDeTickets. También llama a
+	 * 'fecha.getFecha()' para registrar la fecha de creación del sistema.
 	 *
-	 * @param m_ID El identificador único del ticket.
+	 * @param m_ID El identificador único del ticket (numérico y autogenerado).
 	 * @param m_titulo El título descriptivo del ticket.
 	 * @param m_descripcion El detalle completo del problema o tarea.
 	 * @param m_estado El estado inicial del ticket.
@@ -51,7 +51,7 @@ public:
 		: ID(m_ID), titulo(m_titulo), descripcion(m_descripcion), estado(m_estado) {
 
 		
-		fecha.getFecha(); // Almacena la fecha y hora de creación.
+		fecha.getFecha(); // Almacena la fecha de creacion.
 	}
 
 	// GETTERS
@@ -93,21 +93,24 @@ public:
 	 * @param nuevoTitulo El nuevo título a asignar.
 	 * @return void
 	 */
-	void setTitulo(const std::string& nuevoTitulo) { titulo = nuevoTitulo; }
+	void 
+	   setTitulo(const std::string& nuevoTitulo) { titulo = nuevoTitulo; }
 
 	/**
 	 * @brief Establece una nueva descripción para el ticket.
 	 * @param nuevaDescripcion La nueva descripción a asignar.
 	 * @return void
 	 */
-	void setDescripcion(const std::string& nuevaDescripcion) { descripcion = nuevaDescripcion; }
+	void 
+	   setDescripcion(const std::string& nuevaDescripcion) { descripcion = nuevaDescripcion; }
 
 	/**
 	 * @brief Actualiza el estado del ticket.
 	 * @param m_estado El nuevo estado (e.g., Estado::Completado).
 	 * @return void
 	 */
-	void setEstado(Estado m_estado) { estado = m_estado; }
+	void 
+	   setEstado(Estado m_estado) { estado = m_estado; }
 
 
 	// UTILIDAD
@@ -125,7 +128,7 @@ public:
 	}
 
 private:
-	std::string ID; //< Identificador único del ticket (e.g., "T-001").
+	std::string ID; //< Identificador único del ticket.
 	std::string titulo; //< Resumen conciso de la tarea
 	std::string descripcion; //< Resumen conciso de la tarea
 	Estado estado; //< El estado actual del ticket (usa la enum Estado).
